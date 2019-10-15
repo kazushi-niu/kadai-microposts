@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  #ApplicationControllerのメソッドを使用（:index,:showアクションで事前使用）
+  before_action :require_user_logged_in, only: [:index, :show]
+  
   #ユーザ一覧表示
   def index
     #Userクラスからユーザ一覧を降順に25件取得

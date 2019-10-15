@@ -4,9 +4,14 @@ Rails.application.routes.draw do
   #get "/" => toppages#index
   root to: 'toppages#index'
   
+  #ログイン機能
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+  
   #/ユーザーの新規登録
   get 'signup', to: 'users#new'
   
-  #7つの基本ルーティングの省略形(実装は、index,show,new,createのみ)
+  #ユーザー登録用のルーティング(実装は、index,show,new,createのみ)
   resources :users, only: [:index, :show, :new, :create]
 end

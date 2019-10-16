@@ -7,4 +7,7 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 }, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: { case_sensitive: false }
   #パスワード機能の提供
   has_secure_password
+  
+  #micropostとの関連付け
+  has_many :microposts
 end

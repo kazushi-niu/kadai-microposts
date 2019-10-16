@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   #/ユーザーの新規登録
   get 'signup', to: 'users#new'
   
-  #ユーザー登録用のルーティング(実装は、index,show,new,createのみ)
+  #ユーザー登録用のルーティング(index,show,new,createのみ)
   resources :users, only: [:index, :show, :new, :create]
+  
+  #コメント機能のルーティング(create,destroyのみ)
+  resources :microposts, only: [:create, :destroy]
 end

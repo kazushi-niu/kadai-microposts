@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   #ApplicationControllerのメソッドを使用（:index,:showアクションで事前使用）
-  before_action :require_user_logged_in, only: [:index, :show]
+  before_action :require_user_logged_in, only: [:index, :show, :followings, :followers]
   
   #ユーザ一覧表示
   def index
@@ -12,6 +12,10 @@ class UsersController < ApplicationController
   def show
     #Userクラスから特定idのユーザを取得
     @user = User.find(params[:id])
+    #Micropostを取得
+    @microposts = @user.microposts.order(id: :desc).page(params[:page])
+    #Micropostsの数をカウント
+    counts(@user)
   end
 
   #ユーザ新規登録用フォーム
@@ -31,6 +35,20 @@ class UsersController < ApplicationController
       flash[:danger] = 'ユーザーの登録に失敗しました。'
       render :new
     end
+  end
+  
+  #フォロー一覧表示
+  def followings
+    @user = User.find(params[:id])
+    @followings = @user.followings.page(params[:page])
+    counts(@user)
+  end
+  
+  #フォロワー一覧表示
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers.page(params[:page])
+    counts(@user)
   end
   
   #private

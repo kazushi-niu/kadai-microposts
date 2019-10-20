@@ -9,12 +9,26 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   
-  #/ユーザーの新規登録
+  #/ユーザの新規登録
   get 'signup', to: 'users#new'
+  
+  #ユーザ情報
+  resources :users, only: [:index, :show, :new, :create] do
+    member do
+      get :followings
+      get :followers
+    end
+    collection do
+      get :search
+    end
+  end
   
   #ユーザー登録用のルーティング(index,show,new,createのみ)
   resources :users, only: [:index, :show, :new, :create]
   
   #コメント機能のルーティング(create,destroyのみ)
   resources :microposts, only: [:create, :destroy]
+  
+  #フォロー機能
+  resources :relationships, only: [:create, :destroy]
 end

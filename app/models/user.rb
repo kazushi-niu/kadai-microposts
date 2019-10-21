@@ -38,4 +38,9 @@ class User < ApplicationRecord
     #フォローしている中に存在しているか
     self.followings.include?(other_user)
   end
+  
+  #タイムライン用のmicropostを取得
+  def feed_microposts
+    Micropost.where(user_id: self.following_ids + [self.id])
+  end
 end

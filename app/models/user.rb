@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
   
   #お気に入り機能用の関連付け
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :favposts, through: :favorites, source: :micropost
   
   #お気に入り登録のメソッド

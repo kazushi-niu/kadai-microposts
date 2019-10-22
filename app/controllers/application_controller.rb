@@ -18,5 +18,7 @@ class ApplicationController < ActionController::Base
     @count_followings = user.followings.count
     #フォロワー数をカウント
     @count_followers = user.followers.count
+    #お気に入り投稿数をカウント
+    @count_favposts = user.favposts.count
   end
 end

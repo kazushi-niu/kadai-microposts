@@ -15,20 +15,25 @@ Rails.application.routes.draw do
   #ユーザ情報
   resources :users, only: [:index, :show, :new, :create] do
     member do
+      #フォローしているユーザ一覧
       get :followings
+      #フォロワー一覧
       get :followers
+      #お気に入り投稿一覧
+      get :likes
     end
     collection do
       get :search
     end
   end
-  
-  #ユーザー登録用のルーティング(index,show,new,createのみ)
-  resources :users, only: [:index, :show, :new, :create]
+
   
   #コメント機能のルーティング(create,destroyのみ)
   resources :microposts, only: [:create, :destroy]
   
-  #フォロー機能
+  #フォロー機能のルーティング
   resources :relationships, only: [:create, :destroy]
+  
+  #お気に入り機能のルーティング
+  resources :favorites, only: [:create, :destroy]
 end

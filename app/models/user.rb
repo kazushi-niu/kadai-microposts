@@ -43,4 +43,25 @@ class User < ApplicationRecord
   def feed_microposts
     Micropost.where(user_id: self.following_ids + [self.id])
   end
+  
+  #お気に入り機能用の関連付け
+  has_many :favorites
+  has_many :favposts, through: :favorites, source: :micropost
+  
+  #お気に入り登録のメソッド
+  def favorite(micropost)
+    favorites.find_or_create_by(micropost_id: micropost.id)
+  end
+  
+  #お気に入り削除のメソッド
+  def unfavorite(micropost)
+    favorite = favorites.find_by(micropost_id: micropost.id)
+    favorite.destroy if favorite
+  end
+  
+  #お気に入り登録判別
+  def favpost?(micropost)
+    self.favposts.include?(micropost)
+  end
+  
 end
